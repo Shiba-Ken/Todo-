@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新しいTodoを作成</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+<style>
+body {
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+}
+.form-group {
+    margin-bottom: 25px;
+}
+.form-label {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.form-control, .form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+.btn-outline-secondary {
+    border: 2px solid #6c757d;
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-outline-secondary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(108, 117, 125, 0.3);
+}
+.required {
+    color: #dc3545;
+    font-weight: bold;
+}
+.page-title {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+.icon {
+    margin-right: 8px;
+}
+@media (max-width: 576px) {
+    .container {
+        padding: 25px;
+        margin: 10px;
+    }
+    .btn-group-custom .btn {
+        margin-bottom: 10px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="page-title text-center">
+        <i class="bi bi-plus-circle-fill icon"></i>
+        新しいToDoを作成
+    </h1>
+
+    <!-- ★修正箇所：th:action="@{/create}" を th:action="@{/addTodo}" に変更 -->
+    <form th:action="@{/addTodo}" th:object="${todoForm}" method="post" novalidate>
+        
+        <div class="form-group">
+            <label for="title" class="form-label">
+                <i class="bi bi-card-text icon"></i>
+                タイトル <span class="required">*</span>
+            </label>
+            <input type="text" 
+                   id="title" 
+                   th:field="*{title}" 
+                   class="form-control" 
+                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''"
+                   placeholder="例：プロジェクトの企画書を作成"
+                   required>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="form-label">
+                <i class="bi bi-journal-text icon"></i>
+                説明
+            </label>
+            <textarea id="description" 
+                      th:field="*{description}" 
+                      class="form-control" 
+                      th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"
+                      rows="4" 
+                      placeholder="詳細な説明を入力してください（任意）"></textarea>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="status" class="form-label">
+                <i class="bi bi-check-circle icon"></i>
+                ステータス <span class="required">*</span>
+            </label>
+            <select id="status" 
+                    th:field="*{status}" 
+                    class="form-select"
+                    th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' : ''"
+                    required>
+                <option value="">選択してください</option>
+                <option th:value="false" selected>未完了</option>
+                <option th:value="true">完了</option>
+            </select>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                <i class="bi bi-check-circle icon"></i>
+                作成する
+            </button>
+            <a href="/" class="btn btn-outline-secondary btn-lg flex-fill text-center">
+                <i class="bi bi-arrow-left icon"></i>
+                一覧に戻る
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// フォームバリデーション
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    }
+
+    // フォーカス時のアニメーション効果
+    const inputs = document.querySelectorAll('.form-control, .form-select');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+    });
+});
+</script>
+
+</body>
+</html>
