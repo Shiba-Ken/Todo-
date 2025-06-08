@@ -21,26 +21,6 @@ Spring Bootで作成したタスク管理アプリケーションです。
 - ビルドツール: Maven
 - その他: Lombok, Spring Boot DevTools
 
-◇プロジェクト構成
-
-src/main/java/com/example/demo/
-├── controller/
-│   └── TodoController.java     # MVCコントローラー
-├── service/
-│   └── TodoService.java        # ビジネスロジック
-├── entity/
-│   └── Todo.java              # データエンティティ
-├── form/
-│   └── TodoForm.java          # フォームオブジェクト
-└── ToDoListApplication.java   # メインクラス
-
-src/main/resources/
-├── templates/                 # Thymeleafテンプレート
-│   ├── todos.html            # タスク一覧画面
-│   ├── create-todo.html      # タスク追加画面
-│   └── edit-todo.html        # タスク編集画面
-└── application.properties    # 設定ファイル
-
 ◇画面構成
 
 1. **タスク一覧画面** (`/`)
@@ -71,4 +51,4 @@ CRUD操作
 - 操作成功時の成功メッセージ
 - エラー発生時のエラーメッセージ
 
-*このプロジェクトはSpring Bootの学習目的で作成されました。*
+このプロジェクトはSpring Bootの学習目的で作成しました。
